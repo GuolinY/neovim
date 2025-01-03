@@ -9,6 +9,7 @@ return {
     float = {
       border = 'rounded',
       preview_slit = 'auto',
+      padding = 5,
     },
   },
   -- Optional dependencies
