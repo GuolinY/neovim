@@ -19,3 +19,19 @@ keymap.set('n', '<leader>tp', ':tabnew<CR>') -- prev tab
 
 -- oil
 vim.api.nvim_set_keymap('n', '<leader>oi', "<cmd>lua require('oil').toggle_float(require('oil').get_current_dir())<CR>", { noremap = true, silent = true })
+
+-- autosave
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp', { clear = true }),
+  callback = function(args)
+    -- 2
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      -- 3
+      buffer = args.buf,
+      callback = function()
+        -- 4 + 5
+        vim.lsp.buf.format { async = false, id = args.data.client_id }
+      end,
+    })
+  end,
+})
